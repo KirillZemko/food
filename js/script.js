@@ -5,18 +5,18 @@ window.addEventListener('DOMContentLoaded', () => {
           tabsParent = document.querySelector('tabheader__items');
 
     function hideTabContent() {
-        tabsContent.forEach(item => {
+       tabsContent.forEach(item => {
             item.style.display = 'none';
-        });
+       });
 
-        tabs.forEach(item => {
-            item.classList.remove('tabheader__item_active');
-        });
+       tabs.forEach(tab => {
+            tab.classList.remove('tabheader__item_active');
+       });
     }
 
     function showTabContent(i) {
         tabsContent[i].style.display = 'block';
-        item.classList.add('tabheader__item_active');
+        tabs[i].classList.add('tabheader__item_active');
     }
 
     hideTabContent();
