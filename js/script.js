@@ -98,4 +98,42 @@ window.addEventListener('DOMContentLoaded', () => {
 
     setClock('.timer', deadLine);
 
+    // Modal
+
+    const modalTrigger = document.querySelectorAll('[data-modal]'),
+          modal = document.querySelector('.modal');  
+          modalCloseBtn = document.querySelector('[data-close]');
+
+    // для всех кнопок с data атрибутом [data-modal] добавляем событие показа модального окна
+    modalTrigger.forEach((btn) => {
+        btn.addEventListener('click', () => {
+            modal.classList.add('show');
+            modal.classList.remove('hide');
+            document.body.style.overflow = 'hidden'; // не дает прокручиваться body, во время откртого модального окна
+        });
+    });
+
+    // функция закрытия модального окна
+    function closeModal() {
+        modal.classList.add('hide');
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    };
+
+    modalCloseBtn.addEventListener('click', closeModal);
+
+    // закрытие модального окна при событии нажатия в элемент modal
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // закрытие модального окна клавишой Esq
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && modal.classList.contains('show')) {
+            closeModal();
+        }
+    });
+
 });
