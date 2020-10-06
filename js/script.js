@@ -144,14 +144,17 @@ window.addEventListener('DOMContentLoaded', () => {
     const modalTimerId = setTimeout(openModal, 3000);
 
     // функция прказывает один раз модальное окно, при скролле в самый низ, после чего удаляется это событие
-    function showModalByScroll(params) {
+    function showModalByScroll() {
+        // pageYOffset количество px на которые проскроллен документ по вертикали Y
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
+            window.removeEventListener('scroll', showModalByScroll);
         }
-
-        window.removeEventListener('scroll', showModalByScroll);
+        
     }
 
     window.addEventListener('scroll', showModalByScroll);
 
 });
+
+console.log(window.pageYOffset);
