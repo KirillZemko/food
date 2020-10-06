@@ -143,10 +143,15 @@ window.addEventListener('DOMContentLoaded', () => {
     // задаем переменную, с таймером запуска открытия функции openModal через 3 сек
     const modalTimerId = setTimeout(openModal, 3000);
 
-    window.addEventListener('scroll', () => {
+    // функция прказывает один раз модальное окно, при скролле в самый низ, после чего удаляется это событие
+    function showModalByScroll(params) {
         if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
         }
-    });
+
+        window.removeEventListener('scroll', showModalByScroll);
+    }
+
+    window.addEventListener('scroll', showModalByScroll);
 
 });
