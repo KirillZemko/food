@@ -104,13 +104,17 @@ window.addEventListener('DOMContentLoaded', () => {
           modal = document.querySelector('.modal');  
           modalCloseBtn = document.querySelector('[data-close]');
 
+    // функция открытия модального окна
+    function openModal() {
+        modal.classList.add('show');
+        modal.classList.remove('hide');
+        document.body.style.overflow = 'hidden'; // не дает прокручиваться body, во время откртого модального окна
+        clearInterval(modalTimerId); // очищаем таймер modalTimerId 
+    };
+
     // для всех кнопок с data атрибутом [data-modal] добавляем событие показа модального окна
     modalTrigger.forEach((btn) => {
-        btn.addEventListener('click', () => {
-            modal.classList.add('show');
-            modal.classList.remove('hide');
-            document.body.style.overflow = 'hidden'; // не дает прокручиваться body, во время откртого модального окна
-        });
+        btn.addEventListener('click', openModal);
     });
 
     // функция закрытия модального окна
@@ -129,10 +133,19 @@ window.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // закрытие модального окна клавишой Esq
+    // закрытие модального окна клавишой Esc
     document.addEventListener('keydown', (e) => {
         if (e.code === 'Escape' && modal.classList.contains('show')) {
             closeModal();
+        }
+    });
+
+    // задаем переменную, с таймером запуска открытия функции openModal через 3 сек
+    const modalTimerId = setTimeout(openModal, 3000);
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+            openModal();
         }
     });
 
