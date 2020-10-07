@@ -142,7 +142,7 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // задаем переменную, с таймером запуска открытия функции openModal через 3 сек
-    const modalTimerId = setTimeout(openModal, 15000);
+    // const modalTimerId = setTimeout(openModal, 3000);
 
     // функция прказывает один раз модальное окно, при скролле в самый низ, после чего удаляется это событие
     function showModalByScroll() {
@@ -159,47 +159,68 @@ window.addEventListener('DOMContentLoaded', () => {
 
     // Menu template
 
-    class menuTemplate {
+    class MenuCard {
         constructor (
-            imgSrc,
-            imgAlt,
+            src,
+            img,
             subtitle,
             descr,
-            priceCoast,
+            price,
             parent
         ) {
-            this.imgSrc = imgSrc;
-            this.imgTitle = imgAlt;
+            this.src = src;
+            this.img = img;
             this.subtitle = subtitle;
             this.descr = descr;
-            this.priceCoast = priceCoast;
+            this.price = price;
             this.parent = document.querySelector(parent);
+            this.currency = 80;
+            this.currencyToRub();
+        }
+
+        currencyToRub() {
+            this.price = this.price * this.currency;
         }
 
         createElement() {
             const newDiv = document.createElement('div');
             newDiv.classList.add('menu__item');
             newDiv.innerHTML = ( `
-                <img src="${this.imgSrc}" alt="${this.imgAlt}">
+                <img src=${this.src} alt=${this.alt}>
                 <h3 class="menu__item-subtitle">${this.subtitle}</h3>
                 <div class="menu__item-descr">${this.descr}</div>
                 <div class="menu__item-divider"></div>
                 <div class="menu__item-price">
                     <div class="menu__item-cost">Цена:</div>
-                    <div class="menu__item-total"><span>${this.priceCoast}</span> грн/день</div>
+                    <div class="menu__item-total"><span>${this.price}</span> грн/день</div>
                 </div>
             `);
 
             this.parent.append(newDiv); // добавляем созданный элемент на страницу
         }
-    }
+    };
 
-    const newMenu = new menuTemplate('../img/tabs/hamburger.jpg',
-                                    'Гамбургер',
-                                    'Меню Гамбургер',
-                                    'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-                                    '1000',
-                                    '.menu .container');
+    new MenuCard(
+        "../img/tabs/vegy.jpg",
+        "vegy",
+        "Меню “Фитнес“",
+        "Меню 'Фитнес' - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!",
+        850,
+        ".menu .container").createElement();
 
-    newMenu.createElement();
+    new MenuCard(
+        "../img/tabs/elite.jpg",
+        "elite",
+        "Меню “Премиум“",
+        "В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!",
+        450,
+        ".menu .container").createElement();
+
+    new MenuCard(
+        "../img/tabs/post.jpg",
+        "post",
+        "Меню “Постное“",
+        "Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.",
+        1000,
+        ".menu .container").createElement();
 });
