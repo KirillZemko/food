@@ -180,19 +180,17 @@ window.addEventListener('DOMContentLoaded', () => {
             const newDiv = document.createElement('div');
             newDiv.classList.add('menu__item');
             newDiv.innerHTML = ( `
-
-                    <img src="${this.imgSrc}" alt="${this.imgAlt}">
-                    <h3 class="menu__item-subtitle">${this.subtitle}</h3>
-                    <div class="menu__item-descr">${this.descr}</div>
-                    <div class="menu__item-divider"></div>
-                    <div class="menu__item-price">
-                        <div class="menu__item-cost">Цена:</div>
-                        <div class="menu__item-total"><span>${this.priceCoast}</span> грн/день</div>
-                    </div>
-
+                <img src="${this.imgSrc}" alt="${this.imgAlt}">
+                <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+                <div class="menu__item-descr">${this.descr}</div>
+                <div class="menu__item-divider"></div>
+                <div class="menu__item-price">
+                    <div class="menu__item-cost">Цена:</div>
+                    <div class="menu__item-total"><span>${this.priceCoast}</span> грн/день</div>
+                </div>
             `);
 
-            this.parent.append(newDiv);
+            this.parent.append(newDiv); // добавляем созданный элемент на страницу
         }
     }
 
