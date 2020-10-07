@@ -109,6 +109,7 @@ window.addEventListener('DOMContentLoaded', () => {
         modal.classList.add('show');
         modal.classList.remove('hide');
         document.body.style.overflow = 'hidden'; // не дает прокручиваться body, во время откртого модального окна
+
         clearInterval(modalTimerId); // очищаем таймер modalTimerId 
     };
 
@@ -141,13 +142,14 @@ window.addEventListener('DOMContentLoaded', () => {
     });
 
     // задаем переменную, с таймером запуска открытия функции openModal через 3 сек
-    const modalTimerId = setTimeout(openModal, 3000);
+    const modalTimerId = setTimeout(openModal, 15000);
 
     // функция прказывает один раз модальное окно, при скролле в самый низ, после чего удаляется это событие
     function showModalByScroll() {
         // pageYOffset количество px на которые проскроллен документ по вертикали Y
-        if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+        if (document.documentElement.scrollTop + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
             openModal();
+            
             window.removeEventListener('scroll', showModalByScroll);
         }
         
@@ -155,6 +157,51 @@ window.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', showModalByScroll);
 
-});
+    // Menu template
 
-console.log(window.pageYOffset);
+    class menuTemplate {
+        constructor (
+            imgSrc,
+            imgAlt,
+            subtitle,
+            descr,
+            priceCoast,
+            parent
+        ) {
+            this.imgSrc = imgSrc;
+            this.imgTitle = imgAlt;
+            this.subtitle = subtitle;
+            this.descr = descr;
+            this.priceCoast = priceCoast;
+            this.parent = document.querySelector(parent);
+        }
+
+        createElement() {
+            const newDiv = document.createElement('div');
+            newDiv.classList.add('menu__item');
+            newDiv.innerHTML = ( `
+
+                    <img src="${this.imgSrc}" alt="${this.imgAlt}">
+                    <h3 class="menu__item-subtitle">${this.subtitle}</h3>
+                    <div class="menu__item-descr">${this.descr}</div>
+                    <div class="menu__item-divider"></div>
+                    <div class="menu__item-price">
+                        <div class="menu__item-cost">Цена:</div>
+                        <div class="menu__item-total"><span>${this.priceCoast}</span> грн/день</div>
+                    </div>
+
+            `);
+
+            this.parent.append(newDiv);
+        }
+    }
+
+    const newMenu = new menuTemplate('../img/tabs/hamburger.jpg',
+                                    'Гамбургер',
+                                    'Меню Гамбургер',
+                                    'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
+                                    '1000',
+                                    '.menu .container');
+
+    newMenu.createElement();
+});
