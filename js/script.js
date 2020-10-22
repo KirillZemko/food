@@ -242,7 +242,7 @@ window.addEventListener('DOMContentLoaded', () => {
         form.addEventListener('submit', (e) => {
             e.preventDefault(); // отменяет стандартное поведение элемента
 
-            const statusMessage = document.createElement('img');
+            const statusMessage = document.createElement('img');            
             statusMessage.src = message.loading;
             statusMessage.style.cssText = `
                 display: block;
