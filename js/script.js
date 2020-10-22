@@ -243,6 +243,14 @@ window.addEventListener('DOMContentLoaded', () => {
             e.preventDefault(); // отменяет стандартное поведение элемента
 
             const statusMessage = document.createElement('img');            
+
+            // проверка на многочисленные нажатия на кнопку отправки введенных данных формы, до того как данные еще не внесены в input
+            statusMessage.setAttribute('data-loading', '1');
+            const currentModal = document.querySelector('[data-loading = "1"]');
+            if (currentModal !== null) {
+                return;
+            }
+
             statusMessage.src = message.loading;
             statusMessage.style.cssText = `
                 display: block;
